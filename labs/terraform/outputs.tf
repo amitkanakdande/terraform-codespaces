@@ -18,6 +18,15 @@ output "vpc_name" {
   value       = aws_vpc.main.tags["Name"]
 }
 
+output "private_subnet_name" {
+  description = "Name tag of the private subnet"
+  value       = aws_subnet.private.tags["Name"]
+}
+
+output "public_subnet_name" {
+  description = "Name tag of the public subnet"
+  value       = aws_subnet.public.tags["Name"]
+}
 output "public_subnet_id" {
   description = "The ID of the public subnet"
   value       = aws_subnet.public.id

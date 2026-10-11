@@ -1,3 +1,11 @@
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
+data "aws_region" "current" {}
+
+data "aws_caller_identity" "current" {}
+
 resource "aws_vpc" "main" {
   cidr_block           = var.vpc_cidr
   enable_dns_support   = true
@@ -10,44 +18,44 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "public" {
-    vpc_id = aws_vpc.main.id
-    cidr_block = var.public_subnet_cidr
-    availability_zone = var.availability_zone
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = var.public_subnet_cidr
+  availability_zone = var.availability_zone
 
-    tags = {
-        Name        = "terraform-codespaces-public-subnet"
-        Environment = var.environment
-    }
+  tags = {
+    Name        = "terraform-codespaces-public-subnet"
+    Environment = var.environment
+  }
 }
 
 resource "aws_subnet" "private" {
-    vpc_id = aws_vpc.main.id
-    cidr_block = var.private_subnet_cidr
-    availability_zone = var.availability_zone
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = var.private_subnet_cidr
+  availability_zone = var.availability_zone
 
-    tags = {
-        Name        = "terraform-codespaces-private-subnet"
-        Environment = var.environment
-    }
+  tags = {
+    Name        = "terraform-codespaces-private-subnet"
+    Environment = var.environment
+  }
 }
 
 resource "aws_route_table" "main" {
-    vpc_id = aws_vpc.main.id
+  vpc_id = aws_vpc.main.id
 
-    tags = {
-        Name        = "terraform-codespaces-route-table"
-        Environment = var.environment
-    }
+  tags = {
+    Name        = "terraform-codespaces-route-table"
+    Environment = var.environment
+  }
 }
 
 resource "aws_route_table_association" "public" {
-    subnet_id = aws_subnet.public.id
-    route_table_id = aws_route_table.main.id
+  subnet_id      = aws_subnet.public.id
+  route_table_id = aws_route_table.main.id
 }
 
 resource "aws_route_table_association" "private" {
-    subnet_id = aws_subnet.private.id
-    route_table_id = aws_route_table.main.id
+  subnet_id      = aws_subnet.private.id
+  route_table_id = aws_route_table.main.id
 }
 
 # Example Security Group

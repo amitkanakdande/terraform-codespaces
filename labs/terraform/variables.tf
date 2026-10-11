@@ -12,14 +12,14 @@ variable "environment" {
 
 variable "public_subnet_cidr" {
   description = "aws public subnet cidr block"
-  type = string
-  default = "10.0.1.0/24"
+  type        = string
+  default     = "10.0.1.0/24"
 }
 
 variable "private_subnet_cidr" {
   description = "aws private subnet cidr block"
-  type = string
-  default = "10.0.2.0/24"
+  type        = string
+  default     = "10.0.2.0/24"
 }
 
 variable "availability_zone" {
